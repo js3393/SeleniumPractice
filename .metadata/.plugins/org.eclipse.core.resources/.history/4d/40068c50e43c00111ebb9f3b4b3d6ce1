@@ -1,0 +1,21 @@
+package tests;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class CalenderAutomation {
+
+	public static void main(String[] args) throws InterruptedException {
+		WebDriver driver = new ChromeDriver();
+		
+		DropDownPractice.runTest(driver);
+		
+		//this will select the from and to destinations and will automatically open the calender
+		
+		driver.findElement(By.cssSelector(".ui-state-default.ui-state-active")).click();
+		// TODO Auto-generated method stub
+
+	}
+
+}

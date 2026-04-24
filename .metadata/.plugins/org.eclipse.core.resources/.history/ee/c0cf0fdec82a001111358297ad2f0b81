@@ -1,0 +1,55 @@
+package tests;
+
+import java.time.Duration;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class SeleIntro {
+
+	public static void main(String[] args) {
+		
+		//step 1. Invoking browser
+		/* Chrome - ChromeDriver -> 
+		 * Methods(all methods wrapped in ChromeDriver class)
+		 * Make sure to close after all drivers, 
+		 * Webdriver methods -> close get
+		 * WebDriver methods have their own methods as well. 
+		 * There are two ways to implement drivers. For example
+		 * WebDriver driver = new ChromeDriver();
+		 * ChromeDriver driver = new ChromeDriver();
+		 * The former has access to methods of chrome driver as defined
+		 * in web driver interface while the latter has access to all
+		 * methods of chrome driver
+		*/
+		//WebDriver wDriver = new WebDriver();
+		//ChromeDriver chromeDriver = new ChromeDriver();
+		// selenium will invoke chromedriver.exe -> invokes chrome browser
+		//Two ways to invoke chromedriver.exe or Selenium manager will do it for you
+		//Pros and cons -> Slower to use selenium manager other than that selenium manager easier
+		// System.setProperty("webdriver.chrome.driver", "C:/Users/Cito/eclipse-workspace/chromedriver.exe");
+		
+		
+		WebDriver driver = new ChromeDriver();
+		driver.get("https://rahulshettyacademy.com");
+		System.out.println(driver.getTitle());
+		System.out.println(driver.getCurrentUrl());
+		try {
+			Thread.sleep(6000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		//wait.until(d -> ((ChromeDriver)d).getTitle().length() > 0);
+		driver.close();
+		
+		//Firefox- FirefoxDriver -> Methods
+		//FirefoxDriver foxDriver = new FirefoxDriver();
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,95 @@
+package tests;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+
+/*
+ * This is meant to be a happy path for the login window is the rashul academy practice app website.
+ * 
+ */
+public class DifferentDrivers {
+	public static void main(String[] args) {
+				
+				WebDriver d = new ChromeDriver();
+				String loginName = "cito91"; 
+				String password = getTempPass(d);
+				
+				d.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+				d.get("https://rahulshettyacademy.com/locatorspractice");
+				System.out.println(d.getTitle());
+				System.out.println(d.getCurrentUrl());
+				d.findElement(By.id("inputUsername")).sendKeys("cito91");
+				d.findElement(By.cssSelector("input[type*='pass']")).sendKeys(password);
+				d.findElement(By.id("chkboxOne")).click();
+				d.findElement(By.id("chkboxTwo")).click();
+				d.findElement(By.xpath("//button[contains(@class,'submit')]")).click();
+				
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println(d.findElement(By.tagName("p")).getText());
+				
+				//gets the greeting when you login
+				d.findElement(By.xpath("//div/h2")).getText();
+				//Another version of above line
+				//d.findElement(By.cssSelector("div[class='login-container'] h2")).getText();
+				System.out.println(d.findElement(By.xpath("//div/h2")).getText());
+				Assert.assertEquals(d.findElement(By.cssSelector("div[class='login-container'] h2")).getText(), "Hello " + loginName + ",");
+				
+				//Compares if the actual the element retrieved matches successful login message. 
+				Assert.assertEquals((d.findElement(By.tagName("p")).getText()), "You are successfully logged in.");
+				
+				//any element based on its text
+				d.findElement(By.xpath("//*[text()='Log Out']")).click();
+
+					//Adds a few seconds before window auto closes to see changes
+					try {
+						Thread.sleep(6000); 
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					//d.close();
+					
+	}
+	
+	public static String getTempPass(WebDriver driver) {
+		
+		driver.get("https://rahulshettyacademy.com/locatorspractice");
+		driver.findElement(By.linkText("Forgot your password?")).click();
+		//Since this is a single page application, after you click forgot password, need time for the page to load the form with buttons
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		driver.findElement(By.xpath("//input[@placeholder='Name']")).sendKeys("cito91");
+		driver.findElement(By.cssSelector("input[placeholder='Email']")).sendKeys("someEmail@gmail.com");
+		driver.findElement(By.xpath("//form/input[3]")).sendKeys("password1");
+		driver.findElement(By.cssSelector(".reset-pwd-btn")).click();
+		String passText = driver.findElement(By.cssSelector("form p")).getText();
+		
+		String actualPass = passText.split("'")[1];
+		//Get back to main screen
+		driver.findElement(By.cssSelector(".go-to-login-btn")).click();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return actualPass;
+	}
+
+}

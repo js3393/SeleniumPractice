@@ -1,0 +1,12 @@
+package tests;
+
+public class WindowActivities {
+
+	public static void main(String[] args) {
+		Web
+		river driver = new ChromeDriver();
+		// TODO Auto-generated method stub
+
+	}
+
+}
