@@ -6,11 +6,17 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 
 public class CalenderAutomation {
-
+	
 	public static void main(String[] args) throws InterruptedException {
 		WebDriver driver = new ChromeDriver();
+		runCalenderSelection(driver);
+	}
+	
+
+	public static void runCalenderSelection(WebDriver driver) throws InterruptedException {
 		
-		DropDownPractice.runTest(driver);
+		
+		DropDownPractice.runDropDownTest(driver);
 		
 		//this will select the from and to destinations and will automatically open the calender
 		

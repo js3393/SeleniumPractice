@@ -15,7 +15,7 @@ public class DropDownPractice {
 		runTest(driver);
 		
 	}
-	public static void runTest(WebDriver driver) throws InterruptedException {
+	public static void runDropDownTest(WebDriver driver) throws InterruptedException {
 		//WebDriver driver = new ChromeDriver();
 		
 		driver.get("https://rahulshettyacademy.com/dropdownsPractise/");
