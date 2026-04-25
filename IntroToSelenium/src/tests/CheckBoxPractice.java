@@ -1,17 +1,24 @@
 package tests;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 public class CheckBoxPractice {
-
 	public static void main(String[] args) {
-		
-		//Get target website and initialize driver
 		WebDriver driver = new ChromeDriver();
-		driver.get("https://rahulshettyacademy.com/dropdownsPractise/");
+		runCheckBox(driver);
+	}
+
+	public static void runCheckBox(WebDriver driver) {
+		//Get target website and initialize driver
+		//driver.get("https://rahulshettyacademy.com/dropdownsPractise/");
+		
+		
 		
 		Assert.assertFalse(driver.findElement(By.cssSelector("input[id*='SeniorCitizenDiscount']")).isSelected());
 		driver.findElement(By.cssSelector("input[id*='friendsandfamily'")).click();
@@ -26,7 +33,7 @@ public class CheckBoxPractice {
 
 		//Assert.assertFalse(true);System.out.println(driver.findElement(By.cssSelector("input[id*='SeniorCitizenDiscount']")).isSelected());
 
-		driver.findElement(By.cssSelector("input[id*='SeniorCitizenDiscount']")).click();
+		//driver.findElement(By.cssSelector("input[id*='SeniorCitizenDiscount']")).click();
 
 		
 
