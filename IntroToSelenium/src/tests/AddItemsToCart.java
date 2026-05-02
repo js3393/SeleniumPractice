@@ -10,13 +10,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
+import org.testng.Assert;
 
 public class AddItemsToCart {
 
 	public static void main(String[] args) throws InterruptedException {
 		WebDriver driver = new ChromeDriver();
 		driver.get("https://rahulshettyacademy.com/seleniumPractise/#/");
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		//driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 
 		runGreenKartTest(driver);
 
@@ -38,25 +39,50 @@ public class AddItemsToCart {
 	}
 	
 	public static void checkout(WebDriver driver) throws InterruptedException {
-		//click cart image. Might need to add a wait time
+		//Test data where rahulshettyacademy will pass anything else should be invalid
+	    String promoString = "rahulshettyacademy";
 
-		driver.findElement(By.xpath("//img[@alt='Cart']")).click();
-		//click proceed to checkout
+	    By cartIcon = By.xpath("//img[@alt='Cart']");
+	    By checkoutBtn = By.xpath("//button[normalize-space()='PROCEED TO CHECKOUT']");
+	    By selectPromoTextbox = By.cssSelector("input.promoCode");
+	    By applyBtn = By.cssSelector("button.promoBtn");
+	    By promoInfo = By.cssSelector("span.promoInfo");
+	    By placeOrder = By.xpath("//div[contains(@style, 'text')]/button[contains(text(), 'Place')]");
 
-		WaitUtils.wait(driver).until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='PROCEED TO CHECKOUT']"))).click();
-		driver.findElement(By.xpath("//button[normalize-space()='PROCEED TO CHECKOUT']")).click();
-		
-		//Type in the promo code
+	    WaitUtils.wait(driver)
+	        .until(ExpectedConditions.elementToBeClickable(cartIcon))
+	        .click();
 
-		driver.findElement(By.cssSelector("input.promoCode")).sendKeys("rashulshettyacademy");
-		//click apply button
-		driver.findElement(By.cssSelector("button.promoBtn")).click();
-		//Grab the text that appears after apply button clicked
-		WaitUtils.wait(driver).until(ExpectedConditions.textMatches(By.cssSelector(".promoInfo")), "Code applied ..!");
+	    WaitUtils.wait(driver)
+	        .until(ExpectedConditions.elementToBeClickable(checkoutBtn))
+	        .click();
 
-		//click place order
-		driver.findElement(By.xpath("//div[contains(@style, 'text')]/button[contains(text(), 'Place')]")).click();
-		
+	    WaitUtils.wait(driver)
+	        .until(ExpectedConditions.visibilityOfElementLocated(selectPromoTextbox))
+	        .sendKeys(promoString);
+
+	    driver.findElement(applyBtn).click();
+
+	    WebElement promoMessage = WaitUtils.wait(driver)
+	        .until(ExpectedConditions.visibilityOfElementLocated(promoInfo));
+
+	    String promoText = promoMessage.getText();
+	    String promoStyle = promoMessage.getAttribute("style");
+
+	    System.out.println(promoText);
+	    
+	    //green = success, red = failure
+	    if (promoStyle.contains("green")) {
+	        Assert.assertEquals(promoText, "Code applied ..!");
+	    } else if (promoStyle.contains("red")) {
+	        Assert.assertEquals(promoText, "Invalid code ..!");
+	    } else {
+	        Assert.fail("Unexpected promo style: " + promoStyle + " with text: " + promoText);
+	    }
+
+	    WaitUtils.wait(driver)
+	        .until(ExpectedConditions.elementToBeClickable(placeOrder))
+	        .click();
 		
 	}
 
