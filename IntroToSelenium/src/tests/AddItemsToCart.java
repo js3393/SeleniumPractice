@@ -1,6 +1,5 @@
 package tests;
 
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
@@ -8,14 +7,22 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
 import org.testng.Assert;
+import utils.WaitUtils;
 
 public class AddItemsToCart {
 
 	public static void main(String[] args) throws InterruptedException {
-		WebDriver driver = new ChromeDriver();
+		ChromeOptions options = new ChromeOptions();
+
+		options.setBinary("/usr/bin/chromium");  // 👈 THIS is the fix
+
+		options.addArguments("--no-sandbox");
+		options.addArguments("--disable-dev-shm-usage");
+
+		WebDriver driver = new ChromeDriver(options);
 		driver.get("https://rahulshettyacademy.com/seleniumPractise/#/");
 		//driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 

@@ -1,4 +1,4 @@
-package tests;
+package assignments;
 
 import java.util.List;
 import java.util.Map;
@@ -10,6 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import utils.WaitUtils;
 
 public class LoginPagePractice {
 
@@ -20,19 +21,8 @@ public class LoginPagePractice {
 		 * (username is rahulshettyacademy and Password is Learning@830$3mK2)
 		 * After logging in, select all items to cart on screen then proceed to checkout
 		 */
-		ChromeOptions options = new ChromeOptions();
 
-		options.addArguments("--disable-notifications");
-		options.addArguments("--disable-infobars");
-		options.addArguments("--incognito");
-
-		options.setExperimentalOption("prefs", Map.of(
-		    "credentials_enable_service", false,
-		    "profile.password_manager_enabled", false,
-		    "profile.password_manager_leak_detection", false
-		));
-
-		WebDriver driver = new ChromeDriver(options);
+		WebDriver driver = new ChromeDriver();
 		driver.get("https://rahulshettyacademy.com/loginpagePractise/");
 		runLoginTest(driver);
 
@@ -77,10 +67,10 @@ public class LoginPagePractice {
 		//List of all cart items on current page
 		//List<WebElement> appCards = d.findElements(By.cssSelector("app-card-list[class='row'"));
 		List<WebElement> addBtn = d.findElements(By.xpath("//button[text()='Add ']"));
-		
-		for(int i = 0; i < addBtn.size(); i++) {
-			addBtn.get(i).click();
-		}
+
+        for (WebElement webElement : addBtn) {
+            webElement.click();
+        }
 	}
 
 }
