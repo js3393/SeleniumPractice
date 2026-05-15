@@ -14,7 +14,8 @@ public class ActionClassTest {
     public static void main(String[] args){
         WebDriver driver = new EdgeDriver();
         driver.get("https://www.amazon.com");
-
+        
+        //Use various methods from the Action class to move the mouse over
         actionTest(driver);
     }
     public static void actionTest(WebDriver d){
@@ -26,19 +27,29 @@ public class ActionClassTest {
         By signInBtn = By.cssSelector("div[id='nav-flyout-ya-signin'] span[class='nav-action-inner']");
 
         WebElement search = WaitUtils.waitForVisible(d, searchBox);
-
+        
+        
+        //Moves the mouse to textbox element, click on it, type in text box, double click to highlight text
         a.moveToElement(search)
                 .click()
                 .keyDown(Keys.SHIFT)
                 .sendKeys("hello")
+                .doubleClick()
                 .keyUp(Keys.SHIFT)
                 .perform();
-
+        
+        //move mouse to element that automatically drops down a list, click on an element from the list.
+        //context click will right click an element
         a.moveToElement(d.findElement(hoverSignIn))
+        		.contextClick()
                 .build()
                 .perform();
-        WaitUtils.waitForVisible(d, signInBtn);
+        WaitUtils.waitForVisible(d, signInBtn); 
         d.findElement(signInBtn).click();
-
+        
+        //Drag and drop
+        a.moveToElement(d.findElement(hoverSignIn))
+        		.dragAndDrop(search, search);
     }
+    
 }
