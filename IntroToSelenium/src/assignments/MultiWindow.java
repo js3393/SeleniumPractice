@@ -24,6 +24,11 @@ public class MultiWindow {
 		
 		driver.findElement(By.xpath("//a[text()='Click Here']")).click();
 		
+		/*
+		 * Important Note:
+		 * Must Call getWindowHandles() only after the action that opens the next window.
+		 * If theres a third or more windows, make a new set and call getWindowHandles() again
+		 */
 		Set<String> windows = driver.getWindowHandles();  //[parentid, childid]
 		Iterator<String> it = windows.iterator();
 		
